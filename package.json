@@ -1,0 +1,28 @@
+{
+  "name": "@jbuschke/react-odata",
+  "version": "0.1.0",
+  "private": false,
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/index.js",
+  "types": "./lib/types.d.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">= 16.8.0-alpha.0 < 17",
+    "react-dom": ">= 16.8.0-alpha.0 < 17"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/lodash": "^4.14.119",
+    "@types/node": "^10.12.18",
+    "@types/react-dom": "^16.0.11",
+    "odata-query": "^5.5.0",
+    "react": "16.8.0-alpha.0",
+    "typescript": "^3.2.2"
+  }
+}

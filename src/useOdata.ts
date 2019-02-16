@@ -28,12 +28,19 @@ const mapToOdataFilter = ({ name, operand, value, dataType }: OdataFilter) => {
   throw Error(`unknown operand '${operand}'`);
 };
 
-export const useOdata = () => {
-  const [top, setTop] = useState(20);
+interface InitialValues {
+  initialPageSize?: number;
+  initialOrderBy?: OrderBy[];
+}
+
+export const useOdata = ({
+  initialPageSize = 20,
+  initialOrderBy = []
+}: InitialValues) => {
+  const [top, setTop] = useState(initialPageSize);
   const [skip, setSkip] = useState(0);
   const [filters, setFilters] = useState<OdataFilter[]>([]);
-  const [orderBy, setOrderBy] = useState<OrderBy[]>([]);
-
+  const [orderBy, setOrderBy] = useState<OrderBy[]>(initialOrderBy);
   const orderByPara = orderBy
     .map(sort => `${sort.name} ${sort.direction}`)
     .join(",");
@@ -48,5 +55,5 @@ export const useOdata = () => {
           .reduce((prev, curr) => `${prev} and ${curr}`)}`
       : ""
   }${orderByQuery}`;
-  return { query, setTop, setSkip, setFilters, setOrderBy };
+  return { query, setTop, top, setSkip, setFilters, setOrderBy };
 };

@@ -23,7 +23,7 @@
     "@types/react-dom": "16.8.2",
     "odata-query": "5.5.0",
     "react": "16.8.3",
-    "typescript": "3.3.3333",
+    "typescript": "3.4.1",
     "tslib": "1.9.3"
   }
 }

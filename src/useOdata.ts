@@ -1,12 +1,23 @@
 import * as React from "react";
 import { useState } from "react";
 
-export type FilterOperand = "contains" | "equals";
+export type FilterOperation =
+  | "contains"
+  // | "notContains"
+  // | "startsWith"
+  // | "endsWith"
+  | "equal"
+  // | "notEqual"
+  | "greaterThan"
+  | "greaterThanOrEqual";
+// | "lessThan"
+// | "lessThanOrEqual"
+
 export type DataType = "number" | "string" | "guid";
 
 export interface OdataFilter {
   name: string;
-  operand: FilterOperand;
+  operation: FilterOperation;
   value: string;
   dataType: DataType;
 }
@@ -16,14 +27,27 @@ export interface OrderBy {
   direction: "asc" | "desc";
 }
 
-const mapToOdataFilter = ({ name, operand, value, dataType }: OdataFilter) => {
+const mapToOdataFilter = ({
+  name,
+  operation: operand,
+  value,
+  dataType
+}: OdataFilter) => {
   switch (operand) {
-    case "contains":
-      return `contains(${name},${
+    case "contains": {
+      return `contains(${name}, ${
         dataType === "number" ? value : `'${value}'`
       })`;
-    case "equals":
+    }
+    case "equal": {
       return `${name} eq ${dataType !== "string" ? value : `'${value}'`}`;
+    }
+    case "greaterThanOrEqual": {
+      return `${name} ge ${dataType !== "string" ? value : `'${value}'`}`;
+    }
+    case "greaterThan": {
+      return `${name} gt ${dataType !== "string" ? value : `'${value}'`}`;
+    }
   }
   throw Error(`unknown operand '${operand}'`);
 };

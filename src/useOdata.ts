@@ -9,8 +9,8 @@ export type FilterOperation =
   | "equal"
   // | "notEqual"
   | "greaterThan"
-  | "greaterThanOrEqual";
-// | "lessThan"
+  | "greaterThanOrEqual"
+  | "lessThan";
 // | "lessThanOrEqual"
 
 export type DataType = "number" | "string" | "guid";
@@ -47,6 +47,9 @@ const mapToOdataFilter = ({
     }
     case "greaterThan": {
       return `${name} gt ${dataType !== "string" ? value : `'${value}'`}`;
+    }
+    case "lessThan": {
+      return `${name} lt ${dataType !== "string" ? value : `'${value}'`}`;
     }
   }
   throw Error(`unknown operand '${operand}'`);

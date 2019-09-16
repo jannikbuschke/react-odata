@@ -20,9 +20,9 @@
     "@types/jest": "24.0.11",
     "@types/lodash": "4.14.123",
     "@types/node": "11.13.4",
-    "@types/react-dom": "16.8.4",
+    "@types/react-dom": "16.9.0",
     "odata-query": "5.5.0",
-    "react": "16.8.6",
+    "react": "16.9.0",
     "typescript": "3.4.3",
     "tslib": "1.9.3"
   }

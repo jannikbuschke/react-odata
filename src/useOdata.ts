@@ -10,7 +10,9 @@ export type FilterOperation =
   // | "notEqual"
   | "greaterThan"
   | "greaterThanOrEqual"
-  | "lessThan";
+  | "lessThan"
+  | "in" 
+  | "not" ;
 // | "lessThanOrEqual"
 
 export type DataType = "number" | "string" | "guid";
@@ -18,7 +20,7 @@ export type DataType = "number" | "string" | "guid";
 export interface OdataFilter {
   name: string;
   operation: FilterOperation;
-  value: string;
+  value: string | string[];
   dataType: DataType;
 }
 
@@ -32,7 +34,7 @@ const mapToOdataFilter = ({
   operation: operand,
   value,
   dataType
-}: OdataFilter) => {
+}: OdataFilter): string => {
   switch (operand) {
     case "contains": {
       return `contains(${name}, ${
@@ -50,6 +52,15 @@ const mapToOdataFilter = ({
     }
     case "lessThan": {
       return `${name} lt ${dataType !== "string" ? value : `'${value}'`}`;
+    }
+    case "in": {
+       if(!Array.isArray(value)){ throw new Error("value is not an array")}
+      return `${name} in (${value.map(v => `'${v}'`)})`;
+    }
+    case "not":{
+      const ret = `not(${mapToOdataFilter(value as any as OdataFilter)})`;
+      console.log("not clause...",ret)
+      return ret
     }
   }
   throw Error(`unknown operand '${operand}'`);
